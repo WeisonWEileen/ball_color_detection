@@ -2,6 +2,12 @@
 import cv2
 upper = [0,0, 0]
 lower = [255,255,255]
+
+#初始化交互圆的参数
+radius = 20
+circle_center=(0,0)
+mouse_press = False
+
 # 定义鼠标交互函数
 def mouseColor(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -21,8 +27,12 @@ def mouseColor(event, x, y, flags, param):
         print(f"uppper {upper} lower {lower}")
         
 
-path, out = "../41F195BC0547C4B8D6BDF83EF310E8EB.png hsv".split()
+path, out = "./pict/test.png hsv".split()
+print("The path is ",path)
 img = cv2.imread(path)  #读进来是BGR格式
+
+if img is None:
+    raise ValueError("Image not found for this path ")
 # 进行颜色格式的转换
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  #变成灰度图
 hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)  #变成HSV格式
