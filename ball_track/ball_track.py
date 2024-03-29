@@ -68,10 +68,14 @@ def B_R(frame):
     # 计算每个像素BGR值中最大的值
     max_blue = np.maximum.reduce([frame[:, :, 0], frame[:, :, 1], frame[:, :, 2]])
     # 创建蓝色掩码，只有蓝色值是最大值的像素才被保留
+	# 这个好像有bug，就是如果有任意R和G通道的值和B通道一样大，那么这个像素就会被保留
     blue_mask = (frame[:, :, 0] == max_blue).astype(np.uint8) * 255
     # 显示蓝色掩码
     cv2.imshow('blue_mask', blue_mask)
     # 应用掩码到图像
+
+
+	#将蓝色roi区域粘附到
     masked_image = cv2.bitwise_and(frame, frame, mask=blue_mask)
     return masked_image
 
